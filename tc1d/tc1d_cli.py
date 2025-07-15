@@ -56,9 +56,10 @@ def main():
     general.add_argument(
         "--inverse-mode",
         dest="inverse_mode",
-        help="Enable inverse mode",
-        action="store_true",
-        default=False,
+        help="Select inversion method: 'NA' or 'MCMC'",  # BG
+        type=str,
+        choices=["NA", "MCMC"],
+        default="NA"
     )
     general.add_argument(
         "--debug",
@@ -356,6 +357,22 @@ def main():
         default=[0.0],
         type=float,
     )
+    erosion.add_argument(
+        "--ero-option9",
+        dest="ero_option9",
+        help="Erosion model option 9 (see GitHub docs)",
+        nargs="+",
+        default=[0.0],
+        type=float,
+    )  # BG: Added erosion model option 9 for extended intervals
+    erosion.add_argument(
+        "--ero-option10",
+        dest="ero_option10",
+        help="Erosion model option 10 (see GitHub docs)",
+        nargs="+",
+        default=[0.0],
+        type=float,
+    )  # BG: Added erosion model option 10 for extended intervals
     prediction = parser.add_argument_group(
         "Age prediction options", "Options for age prediction"
     )
@@ -770,6 +787,8 @@ def main():
         "ero_option6": args.ero_option6,
         "ero_option7": args.ero_option7,
         "ero_option8": args.ero_option8,
+        "ero_option9": args.ero_option9,
+        "ero_option10": args.ero_option10,
         "temp_surf": args.temp_surf,
         "temp_base": args.temp_base,
         "t_total": args.time,
